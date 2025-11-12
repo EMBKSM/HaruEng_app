@@ -1,12 +1,16 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Tabs } from "expo-router";
-import React from "react";
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { Tabs } from 'expo-router';
+import React from 'react';
 
-import { useColorScheme } from "@/components/useColorScheme";
-import Colors from "@/constants/Colors";
+import { useColorScheme } from '@/components/useColorScheme';
+import Colors from '@/constants/Colors';
 
-function TabBarIcon(props: { name: React.ComponentProps<typeof FontAwesome>["name"]; color: string }) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+// 1. TabBarIcon 함수에서 style 속성 제거, size는 24로 설정
+function TabBarIcon(props: {
+  name: React.ComponentProps<typeof FontAwesome>['name'];
+  color: string;
+}) {
+  return <FontAwesome size={28} {...props} />;
 }
 
 export default function TabLayout() {
@@ -15,33 +19,34 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-      }}
-    >
-      {/* 1. 홈 탭 */}
+        
+        // 2. 탭 바 스타일 수정
+        tabBarStyle: {
+          height: 85, // (아이콘/텍스트 50 + 여백 30)
+          paddingBottom: 30, // 홈 바 영역을 피하기 위해 하단 여백을 30으로 늘림
+        },
+      }}>
+      
       <Tabs.Screen
         name="index"
         options={{
-          title: "홈",
+          title: '홈',
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
       />
-
-      {/* 2. 단어학습 탭 */}
       <Tabs.Screen
         name="word"
         options={{
-          title: "단어학습",
+          title: '단어학습',
           tabBarIcon: ({ color }) => <TabBarIcon name="book" color={color} />,
         }}
       />
-
-      {/* 3. AI 인터뷰 탭*/}
       <Tabs.Screen
         name="interview"
         options={{
-          title: "AI 인터뷰",
+          title: 'AI 인터뷰',
           tabBarIcon: ({ color }) => <TabBarIcon name="microphone" color={color} />,
         }}
       />
